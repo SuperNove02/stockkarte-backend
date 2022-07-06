@@ -1,4 +1,4 @@
-package com.peter.springTest;
+package com.stockkarte;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

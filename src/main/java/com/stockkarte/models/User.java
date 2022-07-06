@@ -1,4 +1,4 @@
-package com.peter.springTest.models;
+package com.stockkarte.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

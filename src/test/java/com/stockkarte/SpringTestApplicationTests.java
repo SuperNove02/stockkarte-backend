@@ -1,4 +1,4 @@
-package com.peter.springTest;
+package com.stockkarte;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
