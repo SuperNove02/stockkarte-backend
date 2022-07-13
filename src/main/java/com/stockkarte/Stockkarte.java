@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class SpringTestApplication {
+public class Stockkarte {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringTestApplication.class, args);
+		SpringApplication.run(Stockkarte.class, args);
 	}
 
 	@RequestMapping(value="/")
