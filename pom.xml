@@ -11,7 +11,7 @@
 	<groupId>com.peter</groupId>
 	<artifactId>springTest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springTest</name>
+	<name>Stockkarte</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
