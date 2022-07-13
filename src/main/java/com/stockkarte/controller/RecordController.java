@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -35,16 +37,24 @@ public class RecordController {
     }
 
     @PutMapping("/record")
-    public void updateRecord(@Valid @RequestBody Record record) throws ResourceNotFoundException {
+    public Record updateRecord(@Valid @RequestBody Record record) throws ResourceNotFoundException {
         Long recordId = record.getId();
         Record recordFromDb = recordRepository.findById(recordId)
-                .orElseThrow(() -> new ResourceNotFoundException("Record not found with followind id :: " + recordId));
+                .orElseThrow(() -> new ResourceNotFoundException("Record not found with following id :: " + recordId));
         recordFromDb.setName(record.getName());
         recordFromDb.setTask(record.getTask());
         recordFromDb.setTemperature(record.getTemperature());
         recordFromDb.setWeather(record.getWeather());
-        //recordFromDb.setI
+        return recordRepository.save(recordFromDb);
+    }
 
-
+    @DeleteMapping("/record")
+    public Map<String, Boolean> deleteRecord(@PathVariable(value="id") long recordId) throws ResourceNotFoundException {
+        Record record = recordRepository.findById(recordId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Record not found with following id :: " + recordId));
+        recordRepository.delete(record);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
     }
 }
