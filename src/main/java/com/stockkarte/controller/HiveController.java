@@ -33,7 +33,6 @@ public class HiveController {
     public Hive createHive(@Valid @RequestBody Hive hive) {
         return hiveRepository.save(hive);
     }
-     // TODO add: delete and put methods
 
     @DeleteMapping("/hive/{id}")
     public Hive deleteHive(@PathVariable(value="id") Long hiveId) throws ResourceNotFoundException{

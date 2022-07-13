@@ -1,13 +1,18 @@
 package com.stockkarte.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name="hives")
+@Table(name="HIVE")
 public class Hive {
     private long id;
     private String name;
     private String system;
+
+    //@OneToMany(targetEntity = Record.class)
+    //@JoinColumn(name="fk_hive")
+    //private Set<Record> records;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
