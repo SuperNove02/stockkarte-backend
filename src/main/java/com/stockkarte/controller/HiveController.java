@@ -2,7 +2,6 @@ package com.stockkarte.controller;
 
 import com.stockkarte.exception.ResourceNotFoundException;
 import com.stockkarte.models.Hive;
-import com.stockkarte.repository.EmployeeRepostitory;
 import com.stockkarte.repository.HiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,4 +34,22 @@ public class HiveController {
         return hiveRepository.save(hive);
     }
      // TODO add: delete and put methods
+
+    @DeleteMapping("/hive/{id}")
+    public Hive deleteHive(@PathVariable(value="id") Long hiveId) throws ResourceNotFoundException{
+        Hive hive = hiveRepository.findById(hiveId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hive not found with following id :: " + hiveId));
+        hiveRepository.delete(hive);
+        return hive;
+    }
+
+    @PutMapping("/hive")
+    public Hive updateHive(@Valid @RequestBody Hive hive) throws ResourceNotFoundException {
+        Hive hiveFromDb = hiveRepository.findById(hive.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Hive not found with following id :: " + hive.getId()));
+        hiveFromDb.setName(hive.getName());
+        hiveFromDb.setSystem(hive.getSystem());
+        hiveRepository.save(hiveFromDb);
+        return hiveFromDb;
+    }
 }
