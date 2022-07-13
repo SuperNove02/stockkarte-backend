@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -33,14 +35,15 @@ public class HiveController {
     public Hive createHive(@Valid @RequestBody Hive hive) {
         return hiveRepository.save(hive);
     }
-     // TODO add: delete and put methods
 
     @DeleteMapping("/hive/{id}")
-    public Hive deleteHive(@PathVariable(value="id") Long hiveId) throws ResourceNotFoundException{
+    public Map<String, Boolean> deleteHive(@PathVariable(value="id") Long hiveId) throws ResourceNotFoundException{
         Hive hive = hiveRepository.findById(hiveId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hive not found with following id :: " + hiveId));
         hiveRepository.delete(hive);
-        return hive;
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
     }
 
     @PutMapping("/hive")
