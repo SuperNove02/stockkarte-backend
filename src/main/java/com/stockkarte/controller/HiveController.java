@@ -45,6 +45,11 @@ public class HiveController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+    @GetMapping("/hiveall/{id}")
+    public String getAllRecordsForId (@PathVariable(value="id")long hiveId){
+        Hive hive = hiveRepository.findById(hiveId).orElse();
+        return "Hallo";
+    }
 
     @PutMapping("/hive")
     public Hive updateHive(@Valid @RequestBody Hive hive) throws ResourceNotFoundException {

@@ -11,8 +11,8 @@ public class Hive {
     private String system;
 
     //@OneToMany(targetEntity = Record.class)
-    //@JoinColumn(name="fk_hive")
-    //private Set<Record> records;
+    @OneToMany(mappedBy ="hive", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Record> records;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

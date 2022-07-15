@@ -19,6 +19,10 @@ public class Record {
     private Hive hive;
      */
 
+    @ManyToOne
+    @JoinColumn(name = "hive_id")
+    private Hive hive;
+
     private String name;
     private float temperature;
     private String weather;
