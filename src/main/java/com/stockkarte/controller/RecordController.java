@@ -1,7 +1,9 @@
 package com.stockkarte.controller;
 
 import com.stockkarte.exception.ResourceNotFoundException;
+import com.stockkarte.models.Hive;
 import com.stockkarte.models.Record;
+import com.stockkarte.repository.HiveRepository;
 import com.stockkarte.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class RecordController {
     @Autowired
     public RecordRepository recordRepository;
 
+    @Autowired
+    private HiveRepository hiveRepository;
+
     @GetMapping("/records")
     public List<Record> getAllRecords() {
         return recordRepository.findAll();
@@ -31,8 +36,12 @@ public class RecordController {
     }
 
     @PostMapping("/record/{id}")
-    public Record createRecord(@Valid @RequestBody Record record, @PathVariable(value = "id") Long hiveId) {
+    public Record createRecord(@Valid @RequestBody Record record, @PathVariable(value = "id") Long hiveId) throws  ResourceNotFoundException{
         System.out.println(hiveId);
+        Hive hive = hiveRepository.findById(hiveId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hive nof found with followind id :: " + hiveId));
+        hive.addRecord(record);
+        record.setHive(hive);
         return recordRepository.save(record);
     }
 
