@@ -19,6 +19,7 @@ public class User {
     private String password;
     private String name;
 
+    @JsonIgnoreProperties({"user"})
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Hive> hives = new ArrayList<Hive>();
 
