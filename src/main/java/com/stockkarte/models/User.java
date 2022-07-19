@@ -1,9 +1,8 @@
 package com.stockkarte.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //@AllArgsConstructor
 //@Data
@@ -17,6 +16,14 @@ public class User {
     private String email;
     private String password;
     private String name;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Hive> hives = new ArrayList<Hive>();
+
+    public void addHive(Hive hive) {
+        hive.setUser(this);
+        this.hives.add(hive);
+    }
 
     public long getId() {
         return id;
@@ -51,5 +58,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Hive> getHives() {
+        return hives;
+    }
+
+    public void setHives(List<Hive> hives) {
+        this.hives = hives;
     }
 }
