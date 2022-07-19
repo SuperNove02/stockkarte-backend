@@ -3,8 +3,9 @@ package com.stockkarte.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.stockkarte.models.User;
 @Entity
 @Table(name="HIVE")
 public class Hive {
@@ -14,7 +15,10 @@ public class Hive {
     private String name;
     private String system;
 
-    //@OneToMany(targetEntity = Record.class)
+    @JsonIgnoreProperties({"hives"})
+    @ManyToOne
+    private User user;
+
     @OneToMany(mappedBy ="hive", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Record> records = new ArrayList<Record>();
 
@@ -44,5 +48,13 @@ public class Hive {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

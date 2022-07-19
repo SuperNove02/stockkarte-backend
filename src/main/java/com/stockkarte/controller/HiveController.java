@@ -3,7 +3,10 @@ package com.stockkarte.controller;
 import com.stockkarte.exception.ResourceNotFoundException;
 import com.stockkarte.models.Hive;
 import com.stockkarte.models.Record;
+import com.stockkarte.models.User;
 import com.stockkarte.repository.HiveRepository;
+import com.stockkarte.repository.UserRepository;
+import org.hibernate.ResourceClosedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,8 @@ public class HiveController {
 
     @Autowired
     private HiveRepository hiveRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/hives")
     public List<Hive> getAllHives() {
@@ -32,8 +37,12 @@ public class HiveController {
         return ResponseEntity.ok().body(hive);
     }
 
-    @PostMapping("/hive")
-    public Hive createHive(@Valid @RequestBody Hive hive) {
+    @PostMapping("/hive/{id}")
+    public Hive createHive(@Valid @RequestBody Hive hive, @PathVariable(value = "id") Long userId) throws ResourceNotFoundException{
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with following id :: " + userId));
+        hive.setUser(user);
+        user.addHive(hive);
         return hiveRepository.save(hive);
     }
 
