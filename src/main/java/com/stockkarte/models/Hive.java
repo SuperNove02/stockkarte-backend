@@ -3,6 +3,8 @@ package com.stockkarte.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stockkarte.models.User;
 @Entity
 @Table(name="HIVE")
@@ -13,6 +15,7 @@ public class Hive {
     private String name;
     private String system;
 
+    @JsonIgnoreProperties({"hives"})
     @ManyToOne
     private User user;
 
