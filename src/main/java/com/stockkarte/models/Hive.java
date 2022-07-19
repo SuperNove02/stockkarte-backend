@@ -1,21 +1,28 @@
 package com.stockkarte.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="HIVE")
 public class Hive {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String system;
 
     //@OneToMany(targetEntity = Record.class)
-    //@JoinColumn(name="fk_hive")
-    //private Set<Record> records;
+    @OneToMany(mappedBy ="hive", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Record> records = new ArrayList<Record>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public void addRecord(Record record) {
+        record.setHive(this);
+        records.add(record);
+    }
+
     public long getId() {
         return id;
     }
@@ -38,6 +45,4 @@ public class Hive {
     public void setName(String name) {
         this.name = name;
     }
-
-
-    }
+}

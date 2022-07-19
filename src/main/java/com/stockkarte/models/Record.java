@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Table(name="RECORD")
 public class Record {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     /*
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -19,13 +21,15 @@ public class Record {
     private Hive hive;
      */
 
+    @ManyToOne
+    //@JoinColumn(name = "hive_id")
+    private Hive hive;
+
     private String name;
     private float temperature;
     private String weather;
     private String task;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() { return id; }
 
     public void setId(long id) { this.id = id;}
@@ -65,5 +69,14 @@ public class Record {
 
     public void setTask(String task) {
         this.task = task;
+    }
+
+
+    public Hive getHive() {
+        return hive;
+    }
+
+    public void setHive(Hive hive) {
+        this.hive = hive;
     }
 }

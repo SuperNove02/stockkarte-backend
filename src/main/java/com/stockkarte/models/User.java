@@ -8,21 +8,21 @@ import javax.persistence.*;
 //@AllArgsConstructor
 //@Data
 @Entity
-@Table(name="USER")
+@Table(name="APPUSER")
 public class User {
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String email;
     private String password;
     private String name;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
