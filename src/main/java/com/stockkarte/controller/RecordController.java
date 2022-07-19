@@ -37,7 +37,6 @@ public class RecordController {
 
     @PostMapping("/record/{id}")
     public Record createRecord(@Valid @RequestBody Record record, @PathVariable(value = "id") Long hiveId) throws  ResourceNotFoundException{
-        System.out.println(hiveId);
         Hive hive = hiveRepository.findById(hiveId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hive nof found with followind id :: " + hiveId));
         hive.addRecord(record);
