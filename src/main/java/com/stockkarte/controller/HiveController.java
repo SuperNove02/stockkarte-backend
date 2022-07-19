@@ -5,6 +5,7 @@ import com.stockkarte.models.Hive;
 import com.stockkarte.repository.HiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
+@Secured("ROLE_USER")
 public class HiveController {
 
     @Autowired
