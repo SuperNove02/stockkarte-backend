@@ -73,6 +73,10 @@ public class HiveController {
 
     @PutMapping("/hive")
     public Hive updateHive(@Valid @RequestBody Hive hive) throws ResourceNotFoundException {
+        System.out.println(hive.getSystem());
+        System.out.println(hive.getId());
+        System.out.println(hive.getUser());
+        System.out.println(hive.getName());
         Hive hiveFromDb = hiveRepository.findById(hive.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Hive not found with following id :: " + hive.getId()));
         hiveFromDb.setName(hive.getName());
