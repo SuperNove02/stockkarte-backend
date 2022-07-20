@@ -19,6 +19,7 @@ public class Hive {
     @ManyToOne
     private User user;
 
+
     @OneToMany(mappedBy ="hive", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Record> records = new ArrayList<Record>();
 
@@ -56,5 +57,13 @@ public class Hive {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 }

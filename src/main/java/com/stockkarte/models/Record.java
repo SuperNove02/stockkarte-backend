@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="RECORD")
@@ -29,6 +30,8 @@ public class Record {
     private float temperature;
     private String weather;
     private String task;
+    private Date date;
+    private String beeBehaviour;
 
     public long getId() { return id; }
 
@@ -78,5 +81,21 @@ public class Record {
 
     public void setHive(Hive hive) {
         this.hive = hive;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getBeeBehaviour() {
+        return beeBehaviour;
+    }
+
+    public void setBeeBehaviour(String beeBehaviour) {
+        this.beeBehaviour = beeBehaviour;
     }
 }
