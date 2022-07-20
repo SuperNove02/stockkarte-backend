@@ -3,15 +3,15 @@ package com.stockkarte.controller;
 import com.stockkarte.exception.ResourceNotFoundException;
 import com.stockkarte.models.Hive;
 import com.stockkarte.models.Record;
+import com.stockkarte.models.User;
 import com.stockkarte.repository.HiveRepository;
 import com.stockkarte.repository.RecordRepository;
+import com.stockkarte.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -23,10 +23,31 @@ public class RecordController {
 
     @Autowired
     private HiveRepository hiveRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/records")
     public List<Record> getAllRecords() {
         return recordRepository.findAll();
+    }
+
+
+    @GetMapping("/records/{id}")
+    public List<Record> getRecordsByUserId(@PathVariable(value = "id") long userId) throws ResourceNotFoundException {
+        List<Record> records = new ArrayList<>();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(""));
+        List<Hive> hives = user.getHives();
+        System.out.println(hives);
+        for (Hive hive: hives) {
+            // TODO this should be changed to a lambda function or something else
+            List<Record> recordsHive = hive.getRecords();
+            System.out.println(recordsHive);
+            for (Record recordHive : recordsHive) {
+                records.add(recordHive);
+            }
+        }
+        return records;
     }
 
     @GetMapping("/record/{id}")
@@ -54,6 +75,7 @@ public class RecordController {
         recordFromDb.setTask(record.getTask());
         recordFromDb.setTemperature(record.getTemperature());
         recordFromDb.setWeather(record.getWeather());
+        recordFromDb.setDate(record.getDate());
         return recordRepository.save(recordFromDb);
     }
 
@@ -66,4 +88,5 @@ public class RecordController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+
 }
