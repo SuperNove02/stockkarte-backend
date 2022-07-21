@@ -1,6 +1,7 @@
 package com.stockkarte.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -24,6 +25,7 @@ public class Record {
 
     @ManyToOne
     //@JoinColumn(name = "hive_id")
+    @JsonIgnoreProperties({"hive", "records"})
     private Hive hive;
 
     private String name;
